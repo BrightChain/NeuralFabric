@@ -1,0 +1,3 @@
+[submodule "Neural.NET"]
+	path = Neural.NET
+	url = git@github.com:FreddieMercurial-forks/Neural.NET.git
