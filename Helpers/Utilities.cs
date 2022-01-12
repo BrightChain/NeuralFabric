@@ -7,6 +7,18 @@ namespace NeuralFabric.Helpers;
 
 public static class Utilities
 {
+    public static bool IsDebugMode
+    {
+        get
+        {
+#if DEBUG
+            return true;
+#else
+            return false;
+#endif
+        }
+    }
+
     public static Version GetAssemblyVersionForType(Type assemblyType = null)
     {
         return Assembly.GetAssembly(
@@ -64,25 +76,13 @@ public static class Utilities
         return blockHash;
     }
 
-    public static bool IsDebugMode
-    {
-        get
-        {
-#if DEBUG
-            return true;
-#else
-            return false;
-#endif
-        }
-    }
-
     public static DirectoryInfo EnsuredDirectory(string dir)
     {
-        if (!Directory.Exists(dir))
+        if (!Directory.Exists(path: dir))
         {
-            return Directory.CreateDirectory(dir);
+            return Directory.CreateDirectory(path: dir);
         }
 
-        return new DirectoryInfo(dir);
+        return new DirectoryInfo(path: dir);
     }
 }

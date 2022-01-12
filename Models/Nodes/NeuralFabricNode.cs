@@ -49,5 +49,5 @@ public class NeuralFabricNode
     ///     Gets the node agent's public key. Shortcut.
     /// </summary>
     public ECDiffieHellmanCngPublicKey PublicKey =>
-        this.NodeAgent.PublicKey;
+        this.NodeAgent.DefaultPublicKey;
 }

@@ -21,15 +21,14 @@ public partial class Tapestry : IDisposable
     /// </summary>
     private const long HashtableSize = 1L << 20;
 
-    // Whether we enable a read cache
-    private readonly bool _useReadCache = false;
-
     /// <summary>
     ///     Directory where the block tree root will be placed.
     /// </summary>
     private readonly DirectoryInfo _baseDirectory;
 
     private readonly string _collectionName;
+
+    private readonly IConfiguration _configuration;
 
     /// <summary>
     ///     Authoritative/creating agent- mainly relevant during bootstrap phase.
@@ -48,7 +47,8 @@ public partial class Tapestry : IDisposable
     /// </summary>
     private readonly NeuralFabricAgent _nodeAuthoritativeAgent;
 
-    private readonly IConfiguration _configuration;
+    // Whether we enable a read cache
+    private readonly bool _useReadCache;
 
 
     /// <summary>
@@ -60,28 +60,30 @@ public partial class Tapestry : IDisposable
     public Tapestry(ILogger logger, IConfiguration configuration, string collectionName)
     {
         this._collectionName = collectionName;
-        var nodeOptions = configuration.GetSection("NodeOptions");
+        var nodeOptions = configuration.GetSection(key: "NodeOptions");
         if (nodeOptions is null || !nodeOptions.Exists())
         {
             this._configuration = ConfigurationHelper.LoadConfiguration();
-            nodeOptions = this._configuration.GetSection("NodeOptions");
+            nodeOptions = this._configuration.GetSection(key: "NodeOptions");
         }
 
         if (nodeOptions is null || !nodeOptions.Exists())
         {
-            throw new Exception(string.Format(format: "'NodeOptions' config section must be defined, but is not"));
+            throw new Exception(message: "'NodeOptions' config section must be defined, but is not");
         }
 
         var configuredDbName
-            = nodeOptions.GetSection("DatabaseName");
+            = nodeOptions.GetSection(key: "DatabaseName");
 
         var dbNameConfigured = configuredDbName is not null && configuredDbName.Value.Any();
-        Guid serviceUnifiedStoreGuid = dbNameConfigured ? Guid.Parse(configuredDbName.Value) : Guid.NewGuid();
+        var serviceUnifiedStoreGuid = dbNameConfigured ? Guid.Parse(input: configuredDbName.Value) : Guid.NewGuid();
 
-        var configOption = nodeOptions.GetSection("BasePath");
-        var dir = configOption is not null && configOption.Value.Any() ? configOption.Value : Path.Join(Path.GetTempPath(), "brightchain");
+        var configOption = nodeOptions.GetSection(key: "BasePath");
+        var dir = configOption is not null && configOption.Value.Any()
+            ? configOption.Value
+            : Path.Join(path1: Path.GetTempPath(), path2: "brightchain");
 
-        this._baseDirectory = Utilities.EnsuredDirectory(dir);
+        this._baseDirectory = Utilities.EnsuredDirectory(dir: dir);
 
         if (configuredDbName is null || !configuredDbName.Value.Any())
         {
@@ -89,15 +91,15 @@ public partial class Tapestry : IDisposable
         }
         else
         {
-            var expectedGuid = Guid.Parse(configuredDbName.Value);
+            var expectedGuid = Guid.Parse(input: configuredDbName.Value);
             //if (expectedGuid != this.RootBlock.Guid)
             //{
             //    throw new BrightChainException("Provided root block does not match configured root block guid");
             //}
         }
 
-        var readCache = nodeOptions.GetSection("EnableReadCache");
-        this._useReadCache = readCache is null || readCache.Value is null ? false : Convert.ToBoolean(readCache.Value);
+        var readCache = nodeOptions.GetSection(key: "EnableReadCache");
+        this._useReadCache = readCache is null || readCache.Value is null ? false : Convert.ToBoolean(value: readCache.Value);
 
         this._baseDirectory = new DirectoryInfo(path: dir);
         this._logDevice = this.OpenDevice(nameSpace: string.Format(format: "{0}-log", arg0: this._collectionName));
@@ -108,7 +110,7 @@ public partial class Tapestry : IDisposable
             {
                 LogDevice = this._fasterDevice,
                 ObjectLogDevice = this._fasterDevice,
-                ReadCacheSettings = _useReadCache ? new ReadCacheSettings() : null
+                ReadCacheSettings = this._useReadCache ? new ReadCacheSettings() : null
             },
             checkpointSettings: new CheckpointSettings
             {
