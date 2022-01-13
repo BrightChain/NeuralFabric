@@ -19,8 +19,14 @@ public class GuidId : DataHash
 
     public readonly Guid Guid;
 
+    public GuidId()
+        : base(providedHashBytes: Guid.NewGuid().ToByteArray(), sourceDataLength: HashSizeBytes, computed: true)
+    {
+        this.Guid = new Guid(b: this.HashBytes.ToArray());
+    }
+
     public GuidId(Guid guid)
-        : base(providedHashBytes: guid.ToByteArray(), sourceDataLength: HashSizeBytes, computed: false)
+        : base(providedHashBytes: guid.ToByteArray(), sourceDataLength: HashSizeBytes, computed: true)
     {
         this.Guid = guid;
     }
