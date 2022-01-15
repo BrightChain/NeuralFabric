@@ -10,12 +10,12 @@ public interface IReplicatedSerializable<TBase>
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static abstract void Serialize(ref TBase obj, out ReadOnlyMemory<byte> serializedObject);
+    public static abstract void Serialize(in TBase obj, out ReadOnlyMemory<byte> serializedObject);
 
     /// <summary>
     ///     Deserialize the bytes to an object of the ordained type.
     /// </summary>
     /// <param name="objectData"></param>
     /// <returns></returns>
-    public static abstract void Deserialize(ReadOnlyMemory<byte> objectData, out TBase rematerializedObject);
+    public static abstract void Deserialize(in ReadOnlyMemory<byte> objectData, out TBase rematerializedObject);
 }

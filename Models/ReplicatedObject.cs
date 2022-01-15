@@ -19,13 +19,13 @@ public abstract record ReplicatedObject<TReplicatedObject> : IReplicatedSerializ
 
     private Stream? _serializationStream;
 
-    public ReplicatedObject(TReplicatedObject obj, Replica initialReplica) : this(obj: obj, replicas: new[] {initialReplica})
+    public ReplicatedObject(in TReplicatedObject obj, Replica initialReplica) : this(obj: obj, replicas: new[] {initialReplica})
     {
     }
 
-    public ReplicatedObject(TReplicatedObject obj, IEnumerable<Replica> replicas)
+    public ReplicatedObject(in TReplicatedObject obj, IEnumerable<Replica> replicas)
     {
-        Serialize(obj: ref obj, serializedObject: out var serializedObject);
+        Serialize(obj: in obj, serializedObject: out var serializedObject);
         this.ObjectData = serializedObject;
         this.ObjectType = typeof(TReplicatedObject);
         this.Replicas = replicas;
@@ -33,12 +33,12 @@ public abstract record ReplicatedObject<TReplicatedObject> : IReplicatedSerializ
         this.ObjectId = new DataHash(dataBytes: this.ObjectData);
     }
 
-    public ReplicatedObject(ReadOnlyMemory<byte> objectData)
+    public ReplicatedObject(in ReadOnlyMemory<byte> objectData)
     {
         this.ObjectType = typeof(TReplicatedObject);
         this.Replicas = Enumerable.Empty<Replica>();
         this.ObjectData = objectData;
-        Deserialize(objectData: this.ObjectData, rematerializedObject: out var rematerializedObject);
+        Deserialize(objectData: in this.ObjectData, rematerializedObject: out var rematerializedObject);
         this.Object = rematerializedObject;
         this.ObjectId = new DataHash(dataBytes: this.ObjectData);
     }
@@ -95,12 +95,12 @@ public abstract record ReplicatedObject<TReplicatedObject> : IReplicatedSerializ
         this._deserializationStream = null;
     }
 
-    public static void Serialize(ref TReplicatedObject obj, out ReadOnlyMemory<byte> serializedObject)
+    public static void Serialize(in TReplicatedObject obj, out ReadOnlyMemory<byte> serializedObject)
     {
         throw new NotImplementedException();
     }
 
-    public static void Deserialize(ReadOnlyMemory<byte> objectData, out TReplicatedObject rematerializedObject)
+    public static void Deserialize(in ReadOnlyMemory<byte> objectData, out TReplicatedObject rematerializedObject)
     {
         throw new NotImplementedException();
     }

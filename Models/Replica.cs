@@ -38,12 +38,12 @@ public record Replica : IReplicatedSerializable<Replica>
     /// </summary>
     public readonly ImmutableDictionary<GuidId, ulong> SuccessfulReadsByNodeId;
 
-    public static void Serialize(ref Replica obj, out ReadOnlyMemory<byte> serializedObject)
+    public static void Serialize(in Replica obj, out ReadOnlyMemory<byte> serializedObject)
     {
         throw new NotImplementedException();
     }
 
-    public static void Deserialize(ReadOnlyMemory<byte> objectData, out Replica rematerializedObject)
+    public static void Deserialize(in ReadOnlyMemory<byte> objectData, out Replica rematerializedObject)
     {
         throw new NotImplementedException();
     }

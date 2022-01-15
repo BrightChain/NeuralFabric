@@ -1,6 +1,6 @@
 namespace NeuralFabric.Enumerations;
 
-public enum QuoromTransactionStatus
+public enum QuorumTransactionStatus
 {
     /// <summary>
     ///     Validation is Pending.

@@ -18,12 +18,25 @@ public class QuorumTransaction<TObject, TResult>
     /// <summary>
     ///     To be called when the transaction is ultimately accepted or rejected by the quorum.
     /// </summary>
-    public IEnumerable<Func<QuorumTransaction<TObject, TResult>>> CompletionCallbacks;
+    private IEnumerable<Func<QuorumTransaction<TObject, TResult>, bool>> CompletionCallbacks;
 
-    public QuoromTransactionStatus ValidationStatus { get; private set; }
+    public QuorumTransactionStatus ValidationStatus { get; private set; }
 
     /// <summary>
     ///     Once the transaction is Accepted, this will have the signature for the transaction.
     /// </summary>
     public DataSignature QuorumSignature { get; } = null;
+
+    private void ExecuteCompletionCallbacks()
+    {
+        if (!new[] {QuorumTransactionStatus.Accepted, QuorumTransactionStatus.Rejected}.Contains(value: this.ValidationStatus))
+        {
+            throw new Exception();
+        }
+
+        foreach (var callback in this.CompletionCallbacks)
+        {
+            callback(arg: this);
+        }
+    }
 }
