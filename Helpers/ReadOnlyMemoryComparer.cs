@@ -90,7 +90,6 @@ public sealed class ReadOnlyMemoryComparer<T> : IEqualityComparer<ReadOnlyMemory
         // Release unmanaged memory.
         Marshal.FreeHGlobal(hglobal: ptr);
 
-        var crc32Instance = new Crc32();
-        return (int)crc32Instance.ComputeChecksum(bytes: bytes);
+        return (int)Crc32.ComputeChecksum(bytes: bytes);
     }
 }

@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using DamienG.Security.Cryptography;
 using FASTER.core;
 using NeuralFabric.Helpers;
 using NeuralFabric.Interfaces;
@@ -164,7 +163,7 @@ public class DataHash : IDataHash, IComparable<DataHash>, IEquatable<DataHash>, 
 
     public long GetHashCode64(ref DataHash k)
     {
-        return (long)Crc64Iso.Compute(buffer: k.HashBytes.ToArray());
+        return (long)Crc64Iso.ComputeChecksum(k.HashBytes.ToArray());
     }
 
     public bool Equals(ref DataHash k1, ref DataHash k2)
@@ -210,12 +209,10 @@ public class DataHash : IDataHash, IComparable<DataHash>, IEquatable<DataHash>, 
     /// </summary>
     /// <param name="obj">Should be of DataHash type.</param>
     /// <returns>Returns a boolean indicating whether the bytes are the same in both objects.</returns>
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        return obj is IDataHash iDataHash
-            ? iDataHash.SourceDataLength == this.SourceDataLength &&
-              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes, ar2: iDataHash.HashBytes) == 0
-            : false;
+        return obj is IDataHash iDataHash && (iDataHash.SourceDataLength == this.SourceDataLength &&
+                                              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes, ar2: iDataHash.HashBytes) == 0);
     }
 
     /// <summary>
@@ -224,6 +221,6 @@ public class DataHash : IDataHash, IComparable<DataHash>, IEquatable<DataHash>, 
     /// <returns>Returns the hash code for the HashBytes in this object.</returns>
     public override int GetHashCode()
     {
-        return (int)Crc32.ComputeNewChecksum(bytes: this.HashBytes.ToArray());
+        return (int)Crc32.ComputeChecksum(bytes: this.HashBytes.ToArray());
     }
 }

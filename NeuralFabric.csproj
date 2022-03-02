@@ -8,25 +8,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Remove="Microsoft.FASTER.Core"/>
-        <None Remove="Neural.NET\Neural.NET\Properties\**"/>
+        <None Remove="Microsoft.FASTER.Core" />
+        <None Remove="Neural.NET\Neural.NET\Properties\**" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="MathNet.Numerics" Version="4.15.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.FASTER.Core" Version="1.9.10"/>
-        <PackageReference Include="Microsoft.Orleans.ProtobufNet" Version="3.5.1"/>
-        <PackageReference Include="NetTopologySuite" Version="2.4.0"/>
-        <PackageReference Include="STH1123.ReedSolomon" Version="2.1.0"/>
+        <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.FASTER.Core" Version="1.9.14" />
+        <PackageReference Include="Microsoft.Orleans.ProtobufNet" Version="3.6.0" />
+        <PackageReference Include="NetTopologySuite" Version="2.4.0" />
+        <PackageReference Include="STH1123.ReedSolomon" Version="2.1.0" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Remove="Neural.NET\Neural.NET\Properties\**"/>
+        <Compile Remove="Neural.NET\Neural.NET\Properties\**" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Remove="Neural.NET\Neural.NET\Properties\**"/>
+        <EmbeddedResource Remove="Neural.NET\Neural.NET\Properties\**" />
     </ItemGroup>
 </Project>
