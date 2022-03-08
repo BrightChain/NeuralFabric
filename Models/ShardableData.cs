@@ -41,9 +41,13 @@ public class ShardableData<TObject>
         // convert serialized byte data array to int array
         var intArray = block.ToArray().Select(selector: Convert.ToInt32).ToArray();
         var ecBytes = block.Length * 2; // as RS can repair up to half the ec bytes
-        Array.Resize(array: ref intArray, newSize: block.Length + ecBytes);
+        Array.Resize(array: ref intArray,
+            newSize: block.Length + ecBytes);
         // ensure the block is padded with zeros
-        Array.Fill(array: intArray, value: 0, startIndex: block.Length, count: ecBytes);
+        Array.Fill(array: intArray,
+            value: 0,
+            startIndex: block.Length,
+            count: ecBytes);
 
         this._reedSolomonEncoder.Encode(
             toEncode: intArray,

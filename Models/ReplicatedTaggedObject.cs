@@ -8,7 +8,8 @@ public record ReplicatedTaggedObject<TTaggedObject> : ReplicatedObject<TTaggedOb
     public readonly IEnumerable<string> Tags;
 
     public ReplicatedTaggedObject(TTaggedObject obj, IEnumerable<string> tags)
-        : base(obj: obj, initialReplica: default)
+        : base(obj: obj,
+            initialReplica: default)
     {
         this.Tags = tags;
     }

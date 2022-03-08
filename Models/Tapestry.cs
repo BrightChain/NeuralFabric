@@ -81,7 +81,8 @@ public partial class Tapestry : IDisposable
         var configOption = nodeOptions.GetSection(key: "BasePath");
         var dir = configOption is not null && configOption.Value.Any()
             ? configOption.Value
-            : Path.Join(path1: Path.GetTempPath(), path2: "brightchain");
+            : Path.Join(path1: Path.GetTempPath(),
+                path2: "brightchain");
 
         this._baseDirectory = Utilities.EnsuredDirectory(dir: dir);
 
@@ -102,23 +103,26 @@ public partial class Tapestry : IDisposable
         this._useReadCache = readCache is null || readCache.Value is null ? false : Convert.ToBoolean(value: readCache.Value);
 
         this._baseDirectory = new DirectoryInfo(path: dir);
-        this._logDevice = this.OpenDevice(nameSpace: string.Format(format: "{0}-log", arg0: this._collectionName));
-        this._fasterDevice = this.OpenDevice(nameSpace: string.Format(format: "{0}-data", arg0: this._collectionName));
+        this._logDevice = this.OpenDevice(nameSpace: string.Format(format: "{0}-log",
+            arg0: this._collectionName));
+        this._fasterDevice = this.OpenDevice(nameSpace: string.Format(format: "{0}-data",
+            arg0: this._collectionName));
         this._fasterKv = new FasterKV<string, object>(
             size: HashtableSize, // hash table size (number of 64-byte buckets)
             logSettings: new LogSettings // log settings (devices, page size, memory size, etc.)
             {
                 LogDevice = this._fasterDevice,
                 ObjectLogDevice = this._fasterDevice,
-                ReadCacheSettings = this._useReadCache ? new ReadCacheSettings() : null
+                ReadCacheSettings = this._useReadCache ? new ReadCacheSettings() : null,
             },
-            checkpointSettings: new CheckpointSettings
+            checkpointSettings:
+            new CheckpointSettings
             {
-                CheckpointDir = this.GetDiskCacheDirectory().FullName
+                CheckpointDir = this.GetDiskCacheDirectory().FullName,
             }, // Define serializers; otherwise FASTER will use the slower DataContract
             serializerSettings: new SerializerSettings<string, object>
             {
-                keySerializer = () => new BinaryStringSerializer(), valueSerializer = BaseValueSerializer.GetInstance
+                keySerializer = () => new BinaryStringSerializer(), valueSerializer = BaseValueSerializer.GetInstance,
             });
 
         this._nodeAuthoritativeAgent = new NeuralFabricAgent(configuration: configuration);

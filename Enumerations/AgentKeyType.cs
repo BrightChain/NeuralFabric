@@ -25,5 +25,5 @@ public enum AgentKeyType
     /// <summary>
     ///     Key is for identity only. Can not log in, but can sign/authenticate
     /// </summary>
-    IdentityOnly
+    IdentityOnly,
 }

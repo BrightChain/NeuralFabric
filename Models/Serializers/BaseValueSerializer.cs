@@ -33,7 +33,8 @@ public class BaseValueSerializer : BinaryObjectSerializer<object>, ISingleton<Ba
         var query = from type in assembly.GetTypes()
             where type.IsSealed && !type.IsGenericType && !type.IsNested
             from method in type.GetMethods(bindingAttr: BindingFlags.Static | BindingFlags.Public)
-            where method.IsDefined(attributeType: typeof(ExtensionAttribute), inherit: false)
+            where method.IsDefined(attributeType: typeof(ExtensionAttribute),
+                inherit: false)
             where method.GetParameters()[0].ParameterType == extendedType
             select method;
 
@@ -44,7 +45,9 @@ public class BaseValueSerializer : BinaryObjectSerializer<object>, ISingleton<Ba
     {
         var typeT = obj.GetType();
         var thisAssembly = typeof(BaseValueSerializer).Assembly;
-        foreach (var methodEntry in GetGenericExtensionMethods(assembly: thisAssembly, extendedType: typeT, methodName: "Serialize"))
+        foreach (var methodEntry in GetGenericExtensionMethods(assembly: thisAssembly,
+                     extendedType: typeT,
+                     methodName: "Serialize"))
         {
             var typeArgs = methodEntry.GetGenericArguments();
         }
@@ -61,7 +64,9 @@ public class BaseValueSerializer : BinaryObjectSerializer<object>, ISingleton<Ba
     {
         var typeT = typeof(T);
         var thisAssembly = typeof(BaseValueSerializer).Assembly;
-        foreach (var methodEntry in GetGenericExtensionMethods(assembly: thisAssembly, extendedType: typeT, methodName: "Deserialize"))
+        foreach (var methodEntry in GetGenericExtensionMethods(assembly: thisAssembly,
+                     extendedType: typeT,
+                     methodName: "Deserialize"))
         {
             var typeArgs = methodEntry.GetGenericArguments();
         }
@@ -71,7 +76,9 @@ public class BaseValueSerializer : BinaryObjectSerializer<object>, ISingleton<Ba
 
     public void Deserialize<T>(string combinedKeyString, out T obj)
     {
-        var _ = Tapestry.ValidateKey(combinedKey: combinedKeyString, keyName: string.Empty, expectedType: out var typeT);
+        var _ = Tapestry.ValidateKey(combinedKey: combinedKeyString,
+            keyName: string.Empty,
+            expectedType: out var typeT);
         if (typeT is null || typeof(T) != typeT)
         {
             throw new InvalidDataException();

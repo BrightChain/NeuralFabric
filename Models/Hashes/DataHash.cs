@@ -113,7 +113,8 @@ public class DataHash : IDataHash, IComparable<DataHash>, IEquatable<DataHash>, 
     public int CompareTo(DataHash other)
     {
         return other.SourceDataLength == this.SourceDataLength
-            ? Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes, ar2: other.HashBytes)
+            ? Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes,
+                ar2: other.HashBytes)
             : other.SourceDataLength > this.SourceDataLength
                 ? -1
                 : 1;
@@ -157,32 +158,36 @@ public class DataHash : IDataHash, IComparable<DataHash>, IEquatable<DataHash>, 
     {
         return !(other is null)
             ? other.SourceDataLength == this.SourceDataLength &&
-              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes, ar2: other.HashBytes) == 0
+              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes,
+                  ar2: other.HashBytes) == 0
             : false;
     }
 
     public long GetHashCode64(ref DataHash k)
     {
-        return (long)Crc64Iso.ComputeChecksum(k.HashBytes.ToArray());
+        return (long)Crc64.ComputeChecksum(bytes: k.HashBytes.ToArray());
     }
 
     public bool Equals(ref DataHash k1, ref DataHash k2)
     {
         return !(k2 is null)
             ? k2.SourceDataLength == k1.SourceDataLength &&
-              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: k1.HashBytes, ar2: k2.HashBytes) == 0
+              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: k1.HashBytes,
+                  ar2: k2.HashBytes) == 0
             : false;
     }
 
     public static bool operator ==(DataHash a, DataHash b)
     {
         return a.SourceDataLength == b.SourceDataLength &&
-               Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: a.HashBytes, ar2: b.HashBytes) == 0;
+               Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: a.HashBytes,
+                   ar2: b.HashBytes) == 0;
     }
 
     public static bool operator ==(ReadOnlyMemory<byte> b, DataHash a)
     {
-        return a.SourceDataLength == b.Length && Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: a.HashBytes, ar2: b) == 0;
+        return a.SourceDataLength == b.Length && Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: a.HashBytes,
+            ar2: b) == 0;
     }
 
     public static bool operator !=(ReadOnlyMemory<byte> b, DataHash a)
@@ -211,8 +216,9 @@ public class DataHash : IDataHash, IComparable<DataHash>, IEquatable<DataHash>, 
     /// <returns>Returns a boolean indicating whether the bytes are the same in both objects.</returns>
     public override bool Equals(object? obj)
     {
-        return obj is IDataHash iDataHash && (iDataHash.SourceDataLength == this.SourceDataLength &&
-                                              Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes, ar2: iDataHash.HashBytes) == 0);
+        return obj is IDataHash iDataHash && iDataHash.SourceDataLength == this.SourceDataLength &&
+               Helpers.ReadOnlyMemoryComparer<byte>.Compare(ar1: this.HashBytes,
+                   ar2: iDataHash.HashBytes) == 0;
     }
 
     /// <summary>

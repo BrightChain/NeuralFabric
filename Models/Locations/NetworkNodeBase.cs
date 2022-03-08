@@ -7,7 +7,8 @@ using ProtoBuf;
 namespace NeuralFabric.Models.Locations;
 
 [ProtoContract]
-[ProtoInclude(tag: 1, knownType: typeof(UriNetworkNodeBaseLocation))]
+[ProtoInclude(tag: 1,
+    knownType: typeof(UriNetworkNodeBaseLocation))]
 public abstract record NetworkNodeBase : ISerializable
 {
     private readonly Point GeographicLocation;

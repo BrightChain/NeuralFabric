@@ -45,7 +45,8 @@ public partial class Tapestry : IDisposable
 
     protected IDevice OpenDevice(string nameSpace)
     {
-        var devicePath = this.GetDevicePath(nameSpace: nameSpace, cacheDirectoryInfo: out var _);
+        var devicePath = this.GetDevicePath(nameSpace: nameSpace,
+            cacheDirectoryInfo: out var _);
 
         return Devices.CreateLogDevice(
             logPath: devicePath);

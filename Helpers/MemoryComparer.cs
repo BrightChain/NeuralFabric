@@ -8,13 +8,15 @@ public class MemoryComparer<T> : IEqualityComparer<Memory<T>>, IComparer<Memory<
     /// <summary> Compares the contents of the byte arrays and returns the result. </summary>
     int IComparer<Memory<T>>.Compare(Memory<T> x, Memory<T> y)
     {
-        return Compare(ar1: x, ar2: y);
+        return Compare(ar1: x,
+            ar2: y);
     }
 
     /// <summary> Returns true if the two objects are the same instance </summary>
     bool IEqualityComparer<Memory<T>>.Equals(Memory<T> x, Memory<T> y)
     {
-        return 0 == Compare(ar1: x, ar2: y);
+        return 0 == Compare(ar1: x,
+            ar2: y);
     }
 
     /// <summary> Returns a hash code the instance of the object </summary>
@@ -26,7 +28,8 @@ public class MemoryComparer<T> : IEqualityComparer<Memory<T>>, IComparer<Memory<
     /// <summary> returns true if both arrays contain the exact same set of bytes. </summary>
     public static bool Equals(Memory<T> ar1, Memory<T> ar2)
     {
-        return 0 == Compare(ar1: ar1, ar2: ar2);
+        return 0 == Compare(ar1: ar1,
+            ar2: ar2);
     }
 
     /// <summary> Compares the contents of the byte arrays and returns the result. </summary>
@@ -43,7 +46,9 @@ public class MemoryComparer<T> : IEqualityComparer<Memory<T>>, IComparer<Memory<
         }
 
         var result = 0;
-        int i = 0, stop = Math.Min(val1: ar1.Length, val2: ar2.Length);
+        int i = 0,
+            stop = Math.Min(val1: ar1.Length,
+                val2: ar2.Length);
 
         for (; 0 == result && i < stop; i++)
         {
@@ -80,9 +85,14 @@ public class MemoryComparer<T> : IEqualityComparer<Memory<T>>, IComparer<Memory<
         var bytes = new byte[size];
         var ptr = Marshal.AllocHGlobal(cb: size);
         // Copy object byte-to-byte to unmanaged memory.
-        Marshal.StructureToPtr(structure: tArray, ptr: ptr, fDeleteOld: false);
+        Marshal.StructureToPtr(structure: tArray,
+            ptr: ptr,
+            fDeleteOld: false);
         // Copy data from unmanaged memory to managed buffer.
-        Marshal.Copy(source: ptr, destination: bytes, startIndex: 0, length: size);
+        Marshal.Copy(source: ptr,
+            destination: bytes,
+            startIndex: 0,
+            length: size);
         // Release unmanaged memory.
         Marshal.FreeHGlobal(hglobal: ptr);
 

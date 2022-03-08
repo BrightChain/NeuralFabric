@@ -5,7 +5,8 @@ using ProtoBuf;
 namespace NeuralFabric.Models.Locations;
 
 [ProtoContract]
-[ProtoInclude(tag: 1, knownType: typeof(NetworkNodeBase))]
+[ProtoInclude(tag: 1,
+    knownType: typeof(NetworkNodeBase))]
 public abstract record IpNetworkNodeBaseLocation : NetworkNodeBase
 {
     private readonly IPAddress Address;

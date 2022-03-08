@@ -20,5 +20,5 @@ public enum QuorumTransactionStatus
     /// <summary>
     ///     Quorum has rejected the completed transaction.
     /// </summary>
-    Rejected
+    Rejected,
 }

@@ -21,7 +21,9 @@ public class X509KeyHash : DataHash
     public readonly X509Certificate X509Certificate;
 
     public X509KeyHash(X509Certificate certificate)
-        : base(providedHashBytes: certificate.GetCertHash(), sourceDataLength: HashSizeBytes, computed: false)
+        : base(providedHashBytes: certificate.GetCertHash(),
+            sourceDataLength: HashSizeBytes,
+            computed: false)
     {
         this.X509Certificate = certificate;
     }

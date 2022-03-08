@@ -17,14 +17,18 @@ public partial class Tapestry : IDisposable
     {
         // setup
         var session = this._fasterKv.NewSession(functions: new SimpleFunctions<string, object, NeuralKvContext>());
-        var networkKey = TranslateKey(valueType: this.NeuralNetwork.GetType(), keyName: NeuralNetworkKeyName);
+        var networkKey = TranslateKey(valueType: this.NeuralNetwork.GetType(),
+            keyName: NeuralNetworkKeyName);
 
         // TODO: Long-Term- track changes and store each dendrite in its own KV pair, etc.
         //                  eg foreach through all nodes and individually commit changes.
         // perform update(s)
-        session.Upsert(key: networkKey, desiredValue: this.NeuralNetwork, userContext: new NeuralKvContext());
+        session.Upsert(key: networkKey,
+            desiredValue: this.NeuralNetwork,
+            userContext: new NeuralKvContext());
 
         // commit
-        session.CompletePendingWithOutputs(completedOutputs: out var _, wait: true);
+        session.CompletePendingWithOutputs(completedOutputs: out var _,
+            wait: true);
     }
 }

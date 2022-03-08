@@ -53,7 +53,8 @@ public static class Utilities
     public static string HashToFormattedString(byte[] hashBytes)
     {
         return BitConverter.ToString(value: hashBytes)
-            .Replace(oldValue: "-", newValue: string.Empty)
+            .Replace(oldValue: "-",
+                newValue: string.Empty)
             .ToLower(culture: CultureInfo.InvariantCulture);
     }
 
@@ -66,7 +67,8 @@ public static class Utilities
     public static DataHash GenerateZeroVector(int blockSize)
     {
         var blockBytes = new byte[blockSize];
-        Array.Fill<byte>(array: blockBytes, value: 0);
+        Array.Fill<byte>(array: blockBytes,
+            value: 0);
         var blockHash = new DataHash(dataBytes: new ReadOnlyMemory<byte>(array: blockBytes));
         if (blockHash.HashBytes.Length != DataHash.HashSize / 8)
         {

@@ -30,7 +30,8 @@ public class NeuralFabricAgent
         {
             var keyInfo = this.DefaultKey.ExportSubjectPublicKeyInfo();
 
-            return ECDiffieHellmanCngPublicKey.FromByteArray(publicKeyBlob: keyInfo, format: CngKeyBlobFormat.EccPublicBlob) as
+            return ECDiffieHellmanCngPublicKey.FromByteArray(publicKeyBlob: keyInfo,
+                    format: CngKeyBlobFormat.EccPublicBlob) as
                 ECDiffieHellmanCngPublicKey;
         }
     }

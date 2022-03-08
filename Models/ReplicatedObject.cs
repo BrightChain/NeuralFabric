@@ -5,7 +5,8 @@ using NeuralFabric.Models.Hashes;
 
 namespace NeuralFabric.Models;
 
-[SuppressMessage(category: "Usage", checkId: "CA2252:This API requires opting into preview features")]
+[SuppressMessage(category: "Usage",
+    checkId: "CA2252:This API requires opting into preview features")]
 public abstract record ReplicatedObject<TReplicatedObject> : IReplicatedSerializable<TReplicatedObject>,
     IObjectSerializer<ReplicatedObject<TReplicatedObject>>
     where TReplicatedObject : IReplicatedSerializable<TReplicatedObject>
@@ -19,13 +20,15 @@ public abstract record ReplicatedObject<TReplicatedObject> : IReplicatedSerializ
 
     private Stream? _serializationStream;
 
-    public ReplicatedObject(in TReplicatedObject obj, Replica initialReplica) : this(obj: obj, replicas: new[] {initialReplica})
+    public ReplicatedObject(in TReplicatedObject obj, Replica initialReplica) : this(obj: obj,
+        replicas: new[] {initialReplica})
     {
     }
 
     public ReplicatedObject(in TReplicatedObject obj, IEnumerable<Replica> replicas)
     {
-        Serialize(obj: in obj, serializedObject: out var serializedObject);
+        Serialize(obj: in obj,
+            serializedObject: out var serializedObject);
         this.ObjectData = serializedObject;
         this.ObjectType = typeof(TReplicatedObject);
         this.Replicas = replicas;
@@ -38,7 +41,8 @@ public abstract record ReplicatedObject<TReplicatedObject> : IReplicatedSerializ
         this.ObjectType = typeof(TReplicatedObject);
         this.Replicas = Enumerable.Empty<Replica>();
         this.ObjectData = objectData;
-        Deserialize(objectData: in this.ObjectData, rematerializedObject: out var rematerializedObject);
+        Deserialize(objectData: in this.ObjectData,
+            rematerializedObject: out var rematerializedObject);
         this.Object = rematerializedObject;
         this.ObjectId = new DataHash(dataBytes: this.ObjectData);
     }

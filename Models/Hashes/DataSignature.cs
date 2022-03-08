@@ -47,25 +47,29 @@ public class DataSignature : IDataSignature, IComparable<DataSignature>
 
     public int CompareTo(DataSignature other)
     {
-        return ReadOnlyMemoryComparer<byte>.Compare(ar1: this.SignatureHashBytes, ar2: other.SignatureHashBytes);
+        return ReadOnlyMemoryComparer<byte>.Compare(ar1: this.SignatureHashBytes,
+            ar2: other.SignatureHashBytes);
     }
 
     [ProtoMember(tag: 1)] public ReadOnlyMemory<byte> SignatureHashBytes { get; protected set; }
 
     public string ToString(string format, IFormatProvider _)
     {
-        return BitConverter.ToString(value: this.SignatureHashBytes.ToArray()).Replace(oldValue: "-", newValue: string.Empty)
+        return BitConverter.ToString(value: this.SignatureHashBytes.ToArray()).Replace(oldValue: "-",
+                newValue: string.Empty)
             .ToLower(culture: CultureInfo.InvariantCulture);
     }
 
     public static bool operator ==(DataSignature a, DataSignature b)
     {
-        return ReadOnlyMemoryComparer<byte>.Compare(ar1: a.SignatureHashBytes, ar2: b.SignatureHashBytes) == 0;
+        return ReadOnlyMemoryComparer<byte>.Compare(ar1: a.SignatureHashBytes,
+            ar2: b.SignatureHashBytes) == 0;
     }
 
     public static bool operator ==(ReadOnlyMemory<byte> b, DataSignature a)
     {
-        return ReadOnlyMemoryComparer<byte>.Compare(ar1: a.SignatureHashBytes, ar2: b) == 0;
+        return ReadOnlyMemoryComparer<byte>.Compare(ar1: a.SignatureHashBytes,
+            ar2: b) == 0;
     }
 
     public static bool operator !=(ReadOnlyMemory<byte> b, DataSignature a)
@@ -80,14 +84,16 @@ public class DataSignature : IDataSignature, IComparable<DataSignature>
 
     public new string ToString()
     {
-        return BitConverter.ToString(value: this.SignatureHashBytes.ToArray()).Replace(oldValue: "-", newValue: string.Empty)
+        return BitConverter.ToString(value: this.SignatureHashBytes.ToArray()).Replace(oldValue: "-",
+                newValue: string.Empty)
             .ToLower(culture: CultureInfo.InvariantCulture);
     }
 
     public override bool Equals(object obj)
     {
         return obj is DataSignature
-            ? ReadOnlyMemoryComparer<byte>.Compare(ar1: this.SignatureHashBytes, ar2: (obj as DataSignature).SignatureHashBytes) == 0
+            ? ReadOnlyMemoryComparer<byte>.Compare(ar1: this.SignatureHashBytes,
+                ar2: (obj as DataSignature).SignatureHashBytes) == 0
             : false;
     }
 

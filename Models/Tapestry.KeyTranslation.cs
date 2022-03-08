@@ -41,7 +41,8 @@ public partial class Tapestry : IDisposable
 
     private static string EncodeKeyString(string typeString, string keyName, out byte[] hashBytes)
     {
-        var keyBytes = Encoding.UTF8.GetBytes(s: GetFormattedKey(typeString: typeString, keyName: keyName));
+        var keyBytes = Encoding.UTF8.GetBytes(s: GetFormattedKey(typeString: typeString,
+            keyName: keyName));
         hashBytes = MD5.HashData(source: keyBytes);
         var verifyHashString = Convert.ToHexString(inArray: hashBytes).ToLowerInvariant();
         return verifyHashString;
@@ -53,12 +54,15 @@ public partial class Tapestry : IDisposable
         return string.Join(
             separator: Separator,
             typeString,
-            EncodeKeyString(typeString: typeString, keyName: keyName, hashBytes: out _));
+            EncodeKeyString(typeString: typeString,
+                keyName: keyName,
+                hashBytes: out _));
     }
 
     public static bool ValidateKey(string combinedKey, string keyName, out Type? expectedType)
     {
-        var parts = combinedKey.Split(separator: Separator, count: 2);
+        var parts = combinedKey.Split(separator: Separator,
+            count: 2);
         if (parts.Length != 2)
         {
             expectedType = null;

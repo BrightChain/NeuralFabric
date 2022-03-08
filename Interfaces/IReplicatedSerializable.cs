@@ -2,7 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace NeuralFabric.Interfaces;
 
-[SuppressMessage(category: "Usage", checkId: "CA2252:This API requires opting into preview features")]
+[SuppressMessage(category: "Usage",
+    checkId: "CA2252:This API requires opting into preview features")]
 public interface IReplicatedSerializable<TBase>
 {
     /// <summary>
